@@ -1,20 +1,16 @@
-import React, {useState} from "react";
+import React from "react";
 import {
   Box,
   Grid,
   Card,
   CardContent,
-  Typography,
-  Button,
+ 
   Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Divider,
+  
+  
 } from "@mui/material";
 import { PiClockAfternoonFill, PiFlagBannerFill } from "react-icons/pi";
-import { PiFlagBannerFoldFill } from "react-icons/pi";
+
 
 import { CardDetail, DashboardContainer, DashboardHeading, DashHeading, DashText } from "./DashboardElement";
 
@@ -28,13 +24,14 @@ import './Dashboard.css'
 import { NavLink } from "react-router-dom";
 import ReactApexChart from "react-apexcharts";
 import Chart from "react-apexcharts";
-
+import { connect } from "react-redux";
+import * as actionTypes from "../../store/actions";
 
 
 
  
 
-export default function Dashboard() {
+ function Dashboard() {
   const metrics = [
     { title: "Registered Users", value: "12,000", icon: <Avatar style={{background:"#0C34B4"}}><PiUserFill  /></Avatar> },
     { title: "Registered Locksmith", value: "17,523", icon: <Avatar style={{background:'#375DFB'}}><PiLockKeyFill /></Avatar> },
@@ -331,3 +328,39 @@ export default function Dashboard() {
     </DashboardContainer>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    userData: state.userData,
+    locationData: state.locations,
+    defaultState: state.defaultState,
+    sidebar: state.sidebar,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUsers: (updatedValue) => {
+      dispatch({
+        type: actionTypes.UPDATE_USER,
+        updatedUser: updatedValue,
+      });
+    },
+    setDefaultState: (updatedValue) => {
+      dispatch({
+        type: actionTypes.UPDATE_DEFAULT,
+        updateDefault: updatedValue,
+      });
+    },
+    setSidebar: (updatedValue) => {
+      dispatch({
+        type: actionTypes.UPDATE_SIDEBAR,
+        updateSidebar: updatedValue,
+      });
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard);

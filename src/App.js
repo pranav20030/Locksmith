@@ -29,6 +29,7 @@ const PrivateRoute = ({ userData, defaultState }) => (
   <Routes>
     <Route path="/adminPanel/dashboard" element={<> <Navbar /><Sidebar /><Dashboard /></>} />
     <Route path="/adminPanel/userManagement" element={<> <Navbar /><Sidebar /><UserManagement/></>} />
+   
     
     
 

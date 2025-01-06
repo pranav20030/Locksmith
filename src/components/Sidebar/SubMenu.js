@@ -114,10 +114,7 @@ const SubMenu = ({ userData, item, history, sidebar, setSidebar }) => {
             {item.icon}
           </SidebarIcon>
           <SidebarLabel
-            // style={{
-            //   color: isActive ? "#FFFFFF" : "#0C2D06",
-            //   fontWeight: isActive ? "600" : "",
-            // }}
+           
           >
             {item.title}
           </SidebarLabel>

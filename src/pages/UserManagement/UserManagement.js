@@ -6,16 +6,12 @@ import styled from "styled-components";
 import { TbEyeCheck } from "react-icons/tb";
 import { PiUsersFill } from "react-icons/pi";
 import { FaRegSquareFull } from "react-icons/fa6";
-import { IoMdEye } from "react-icons/io";
+
 import { NavLink } from "react-router-dom";
 import { initialBlockedUsers, initialActiveUsers } from "./UserElement";
 
-
-
-
-
-
-
+import { InputAdornment, TextField } from "@mui/material";
+import { Search as SearchIcon } from "@mui/icons-material";
 const UserManagement = () => {
   const [showCards, setShowCards] = useState(true);
 
@@ -23,12 +19,10 @@ const UserManagement = () => {
     setShowCards(!showCards);
   };
 const UserContainer = styled.div`
-  color: #fff;
+  
  
   margin-left: 300px;
-  overflow: scroll;
-  overflow-x: hidden;
-  overflow-y: hidden;
+ 
   padding: 0rem 2rem;
 
    @media (max-width: 768px) {
@@ -39,38 +33,14 @@ const UserContainer = styled.div`
     margin-left: 0px;
   }
 `;
-// const initialActiveUsers = [
-//   {
-//     id: 1,
-//     action: "view",
-//     date: "10/11/2023",
-//     name: "Jasmine Smith",
-//     email: "jasmine.23@example.com",
-//     status: "tap to block",
-//     phone: "(512) 555-1234",
-//     deviceId: "239878",
-//   },
-//   {
-//     id: 2,
-//     action: "view",
-//     date: "10/11/2023",
-//     name: "John Doe",
-//     email: "john.doe@example.com",
-//     status: "tap to block",
-//     phone: "(512) 555-5678",
-//     deviceId: "123456",
-//   },
-// ];
-
-// const initialBlockedUsers = [
-//   {
-//     id: 3, action: "view", date: "10/11/2023", name: "Jane Doe", email: "jane.doe@example.com", status: "tap to unblock", phone: "(512) 555-9876", deviceId: "2398783792180",
-//   },
-// ];
-
-
 const [tab, setTab] = useState(0);
 const [searchQuery, setSearchQuery] = useState("");
+
+const handleSearchChange = (e) => {
+  setSearchQuery(e.target.value);
+  
+};
+
 const [activeUsers, setActiveUsers] = useState(initialActiveUsers);
 const [blockedUsers, setBlockedUsers] = useState(initialBlockedUsers);
 
@@ -145,7 +115,7 @@ const filteredUsers =
               <div style={{display:'flex', width:'100%', justifyContent:'space-between'}}>
                   <div>
                     <h5 style={{color:'#26344E', fontSize:'1.25rem', fontWeight:'500'}}>Registered Users</h5>
-                    <p style={{color:'white', fontSize:'1.1rem',}}> <i>(in a week )</i> </p>
+                    <p style={{color:'white', fontSize:'1.1rem'}}> <i>(in a week )</i> </p>
                     <h3 style={{color:'#1F263E', fontSize:'1.5rem', fontWeight:'700'}}>2600</h3>
                   </div>
                   <Avatar style={{background:'#26344E'}}><PiUsersFill style={{fontSize:'1.8rem'}} /></Avatar>
@@ -176,18 +146,29 @@ const filteredUsers =
      <div style={{display:'flex', gap:'40px'}}>
      <div>
         <button onClick={() => handleTabChange(0)} style={{ marginRight: 10, backgroundColor: tab === 0 ? "#26344E" : "white", color: tab === 0 ? "white" : "black", border: tab === 0 ? "none": "1px solid #26344E26", padding:'6px 10px', fontWeight: tab === 0 ? "700": "400", }}>
-          Active Users
+          Active Users <span style={{display: tab === 0 ? "": "none"}}>({activeUsers.length})</span> 
         </button>
-        <button onClick={() => handleTabChange(1)} style={{ marginRight: 10, backgroundColor: tab === 1 ? "#26344E" : "white", color: tab === 1 ? "white" : "black", border: tab === 1 ? "none": "1px solid #26344E26", padding:'6px 10px', fontWeight: tab === 1 ? "700": "400", }}>Blocked Users</button>
+        <button onClick={() => handleTabChange(1)} style={{ marginRight: 10, backgroundColor: tab === 1 ? "#26344E" : "white", color: tab === 1 ? "white" : "black", border: tab === 1 ? "none": "1px solid #26344E26", padding:'6px 10px', fontWeight: tab === 1 ? "700": "400", }}>
+          Blocked Users <span style={{display: tab === 1 ? "": "none"}}>({blockedUsers.length})</span> 
+          </button>
       </div>
 
       
       <div style={{ }}>
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+      
+        
+          <TextField
+        placeholder="Serach by name, email etc"
+        style={{maxwidth:'300px'}}
+        value={searchQuery}
+        onChange={handleSearchChange}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
         />
       </div>
       </div>
@@ -265,7 +246,7 @@ const filteredUsers =
                    <td>{user.email}</td>
                    <td>
                      <button onClick={() => handleUnblockUser(user.id)} style={{background:'#11992669', border:'none', padding:'5px'}}>
-                     <i> tap to block</i>
+                     <i> tap to unblock</i>
                      </button>
                    </td>
                    <td>{user.phone}</td>

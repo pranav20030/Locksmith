@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { MdEmail } from "react-icons/md";
-import { IoMdLock } from "react-icons/io";
-import { v4 as uuidv4 } from "uuid";
+
 import Cookies from "js-cookie";
 import { connect } from "react-redux";
 import * as actionTypes from "../../store/actions";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Overlay from "../Overlay";
 import axios from "../../axios";
 import { toast } from "react-toastify";
-import { makeStyles } from '@mui/styles';
+
 
 import Icon from "../../assets/logo.png";
 
@@ -19,26 +17,10 @@ import { loginValidator } from "../../utils/validators";
 
 import { Container, FormContainer, LogoText } from "./LoginElements";
 
-const useStyles = makeStyles((theme) => ({
-  formStyle: {
-    width: "100%",
-    padding: "2rem",
-    overflow: "scroll",
-  },
-  "@media (max-width: 780px)": {
-    formStyle: {
-      padding: "1.8rem",
-    },
-  },
-  "@media (max-width: 480px)": {
-    formStyle: {
-      padding: "1.3rem",
-    },
-  },
-}));
+
 
 const LoginSection = ({ setUsers, userData }) => {
-  const classes = useStyles();
+  
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const accessToken =

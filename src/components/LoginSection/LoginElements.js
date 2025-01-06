@@ -33,7 +33,8 @@ export const FormContainer = styled.div`
  flex-direction: column;
  background: white;
  width: 550px;
- 
+ height: 340px;
+
  border-radius: 10px;
  padding: 2rem 2rem;
  gap: 10px;
