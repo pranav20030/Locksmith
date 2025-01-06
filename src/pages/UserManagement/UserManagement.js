@@ -5,6 +5,10 @@ import styled from "styled-components";
 
 import { TbEyeCheck } from "react-icons/tb";
 import { PiUsersFill } from "react-icons/pi";
+import { FaRegSquareFull } from "react-icons/fa6";
+import { IoMdEye } from "react-icons/io";
+import { NavLink } from "react-router-dom";
+import { initialBlockedUsers, initialActiveUsers } from "./UserElement";
 
 
 
@@ -35,55 +39,48 @@ const UserContainer = styled.div`
     margin-left: 0px;
   }
 `;
-const initialActiveUsers = [
-  {
-    id: 1,
-    action: "view",
-    date: "10/11/2023",
-    name: "Jasmine Smith",
-    email: "jasmine.23@example.com",
-    status: "tap to block",
-    phone: "(512) 555-1234",
-    deviceId: "239878",
-  },
-  {
-    id: 2,
-    action: "view",
-    date: "10/11/2023",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    status: "tap to block",
-    phone: "(512) 555-5678",
-    deviceId: "123456",
-  },
-];
+// const initialActiveUsers = [
+//   {
+//     id: 1,
+//     action: "view",
+//     date: "10/11/2023",
+//     name: "Jasmine Smith",
+//     email: "jasmine.23@example.com",
+//     status: "tap to block",
+//     phone: "(512) 555-1234",
+//     deviceId: "239878",
+//   },
+//   {
+//     id: 2,
+//     action: "view",
+//     date: "10/11/2023",
+//     name: "John Doe",
+//     email: "john.doe@example.com",
+//     status: "tap to block",
+//     phone: "(512) 555-5678",
+//     deviceId: "123456",
+//   },
+// ];
 
-const initialBlockedUsers = [
-  {
-    id: 3,
-    action: "view",
-    date: "10/11/2023",
-    name: "Jane Doe",
-    email: "jane.doe@example.com",
-    status: "tap to unblock",
-    phone: "(512) 555-9876",
-    deviceId: "654321",
-  },
-];
+// const initialBlockedUsers = [
+//   {
+//     id: 3, action: "view", date: "10/11/2023", name: "Jane Doe", email: "jane.doe@example.com", status: "tap to unblock", phone: "(512) 555-9876", deviceId: "2398783792180",
+//   },
+// ];
 
-// States for tabs, search query, active users, and blocked users
+
 const [tab, setTab] = useState(0);
 const [searchQuery, setSearchQuery] = useState("");
 const [activeUsers, setActiveUsers] = useState(initialActiveUsers);
 const [blockedUsers, setBlockedUsers] = useState(initialBlockedUsers);
 
-// Handle tab switching
+
 const handleTabChange = (newValue) => {
   setTab(newValue);
   setSearchQuery("");
 };
 
-// Handle blocking a user
+
 const handleBlockUser = (userId) => {
   const userToBlock = activeUsers.find((user) => user.id === userId);
   if (userToBlock) {
@@ -92,7 +89,7 @@ const handleBlockUser = (userId) => {
   }
 };
 
-// Handle unblocking a user
+
 const handleUnblockUser = (userId) => {
   const userToUnblock = blockedUsers.find((user) => user.id === userId);
   if (userToUnblock) {
@@ -101,7 +98,7 @@ const handleUnblockUser = (userId) => {
   }
 };
 
-// Filter users based on search query
+
 const filteredUsers =
   tab === 0
     ? activeUsers.filter((user) =>
@@ -115,16 +112,16 @@ const filteredUsers =
      <Box sx={{ padding: 2, backgroundColor: "#f1f5f9", borderRadius: 2,border: '1px solid #7CACFF' }}>
       
       <Box display="flex"alignItems="center">
-        <h6 style={{color:'#26344E', fontSize:'1.25rem', padding:"10px 0px", }}>User Management</h6>
+        <h6 style={{color:'#26344E', fontSize:'1.25rem', padding:"10px 0px",marginTop:'4px' }}>User Management</h6>
         <IconButton onClick={toggleCardsVisibility} aria-label="Toggle visibility">
           {showCards ? <Visibility style={{color:'#26344E'}}/> : <VisibilityOff style={{color:'#26344E'}} />}
         </IconButton>
       </Box>
 
-      {/* Cards */}
+   
       {showCards && (
         <Grid container spacing={2}>
-          {/* New Users Card */}
+         
           <Grid item xs={12} sm={4}>
             <Card>
               <CardContent>
@@ -141,7 +138,7 @@ const filteredUsers =
             </Card>
           </Grid>
 
-          {/* Registered Users Card */}
+        
           <Grid item xs={12} sm={4}>
             <Card>
               <CardContent>
@@ -157,7 +154,6 @@ const filteredUsers =
             </Card>
           </Grid>
 
-          {/* Active Users Card */}
           <Grid item xs={12} sm={4}>
             <Card>
               <CardContent>
@@ -175,17 +171,18 @@ const filteredUsers =
         </Grid>
       )}
     </Box>
-    <div>
-      {/* Tabs for switching between Active and Blocked Users */}
-      <div>
-        <button onClick={() => handleTabChange(0)} style={{ marginRight: 10 }}>
+    <div style={{padding:'25px 10px'}} >
+     
+     <div style={{display:'flex', gap:'40px'}}>
+     <div>
+        <button onClick={() => handleTabChange(0)} style={{ marginRight: 10, backgroundColor: tab === 0 ? "#26344E" : "white", color: tab === 0 ? "white" : "black", border: tab === 0 ? "none": "1px solid #26344E26", padding:'6px 10px', fontWeight: tab === 0 ? "700": "400", }}>
           Active Users
         </button>
-        <button onClick={() => handleTabChange(1)}>Blocked Users</button>
+        <button onClick={() => handleTabChange(1)} style={{ marginRight: 10, backgroundColor: tab === 1 ? "#26344E" : "white", color: tab === 1 ? "white" : "black", border: tab === 1 ? "none": "1px solid #26344E26", padding:'6px 10px', fontWeight: tab === 1 ? "700": "400", }}>Blocked Users</button>
       </div>
 
-      {/* Search Input */}
-      <div style={{ marginTop: 20 }}>
+      
+      <div style={{ }}>
         <input
           type="text"
           placeholder="Search by name..."
@@ -193,40 +190,46 @@ const filteredUsers =
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
+      </div>
 
-      {/* Display Active or Blocked Users */}
-      <div style={{ marginTop: 20, overflowY:'scroll' , width:'1000px'}}>
+     
+      <div style={{ marginTop: 20, overflowY:'scroll' }}>
         {tab === 0 && (
           <div>
             
-            <table  style={{ width: "100%", textAlign: "left", color:'black', overflowY:'scroll' }}>
-              <thead>
-                <tr>
+            <table  style={{ width: "100%", textAlign: "center", color:'black', overflowY:'scroll',  }}>
+              <thead style={{background:'#D5DFF0', padding:'10px', color:'#26344E', fontSize:'1rem'}}>
+                <tr style={{overflow:'scroll', }}>
+                  <th style={{padding:'10px'}}><FaRegSquareFull /></th>
+                  <th>S.no</th>
+                  
+                  <th> Joining Date</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Phone</th>
                   <th>Status</th>
-                  <th>Action</th>
                   <th>Phone</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  <th>Device Id</th>
                 </tr>
               </thead>
-              <tbody>
-                {filteredUsers.map((user) => (
+              <tbody style={{fontSize:'14px', fontWeight:'400', color:'#484848'}}>
+                {filteredUsers.map((user, index) => (
                   <tr key={user.id} style={{padding:'10px'}}>
-                    <td>{user.name}</td>
+                    <td style={{padding:"15px"}}> <FaRegSquareFull /> </td>
+                    <td key={index}>{index + 1}</td>
+                    
+                    <td>{user.date}</td>
+                    <td><NavLink style={{color:"#375DFB"}}>{user.name} </NavLink></td>
                     <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.status}</td>
                     <td>
-                      <button onClick={() => handleBlockUser(user.id)}>
-                       Tap Block User
+                      <button onClick={() => handleBlockUser(user.id)} style={{background:'#F56C8980', border:'none', padding:'5px'}} >
+                       <i>tap to block </i>
                       </button>
                     </td>
-                    <td>{user.email}</td>
                     <td>{user.phone}</td>
-                    <td>{user.status}</td>
+                    
+                    
+                    
+                    <td>{user.deviceId}</td>
                   </tr>
                 ))}
               </tbody>
@@ -238,28 +241,39 @@ const filteredUsers =
           <div>
             
             <table  style={{ width: "100%", textAlign: "left", color:'black' }}>
-              <thead>
-                <tr>
+            <thead style={{background:'#D5DFF0', padding:'10px', color:'#26344E', fontSize:'1rem'}}>
+                <tr style={{overflow:'scroll', }}>
+                  <th style={{padding:'10px'}}><FaRegSquareFull /></th>
+                  <th>S.no</th>
+                  
+                  <th> Joining Date</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Phone</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  <th>Phone</th>
+                  <th>Device Id</th>
                 </tr>
               </thead>
-              <tbody>
-                {filteredUsers.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.status}</td>
-                    <td>
-                      <button onClick={() => handleUnblockUser(user.id)}>
-                        Unblock User
-                      </button>
-                    </td>
-                  </tr>
+              <tbody style={{fontSize:'14px', fontWeight:'400', color:'#484848'}}>
+                {filteredUsers.map((user, index) => (
+                   <tr key={user.id} style={{padding:'10px'}}>
+                   <td style={{padding:"15px"}}> <FaRegSquareFull /> </td>
+                   <td key={index}>{index + 1}</td>
+                   
+                   <td>{user.date}</td>
+                   <td><NavLink style={{color:"#375DFB"}}>{user.name} </NavLink></td>
+                   <td>{user.email}</td>
+                   <td>
+                     <button onClick={() => handleUnblockUser(user.id)} style={{background:'#11992669', border:'none', padding:'5px'}}>
+                     <i> tap to block</i>
+                     </button>
+                   </td>
+                   <td>{user.phone}</td>
+                   
+                   
+                   
+                   <td>{user.deviceId}</td>
+                 </tr>
                 ))}
               </tbody>
             </table>

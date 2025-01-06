@@ -84,6 +84,7 @@ const Sidebar = ({ userData, sidebar, setSidebar }) => {
           <SidebarNav sidebar={sidebar}>
             <SidebarWrap className="designScrollbarSide">
               <SidebarDiv></SidebarDiv>
+              
               <div style={{marginTop:'6rem', color:'white', padding:'0rem 1rem'}}><hr /></div>
               {filteredSidebarData.map((item, index) => {
                 return <SubMenu item={item} key={index} />;
